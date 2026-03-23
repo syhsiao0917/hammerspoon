@@ -5,31 +5,19 @@ local M = {}
 local press = hs.eventtap.keyStroke
 local typeText = hs.eventtap.keyStrokes
 local remapTable = {}
+local snippetPrefix = ";;"
 local snippets = {}
+local snippetPrefixes = {}
 local snippetTap = nil
-local snippetBuffer = ""
+local snippetBuffer = nil
+local snippetMatch = nil
+local pendingSemicolon = false
 local isExpandingSnippet = false
 
-local function trimSnippetBuffer()
-    local maxLen = 0
-    for trigger, _ in pairs(snippets) do
-        if #trigger > maxLen then
-            maxLen = #trigger
-        end
-    end
-
-    if maxLen == 0 then
-        snippetBuffer = ""
-        return
-    end
-
-    if #snippetBuffer > maxLen then
-        snippetBuffer = snippetBuffer:sub(-maxLen)
-    end
-end
-
 local function resetSnippetBuffer()
-    snippetBuffer = ""
+    snippetBuffer = nil
+    snippetMatch = nil
+    pendingSemicolon = false
 end
 
 local function deleteTypedTrigger(trigger)
@@ -40,6 +28,63 @@ end
 
 local function shouldIgnoreSnippetEvent(flags)
     return flags.cmd or flags.ctrl or flags.alt or flags.fn
+end
+
+local function prepareSnippets(definitions)
+    snippets = {}
+    snippetPrefixes = {}
+
+    for trigger, expansion in pairs(definitions or {}) do
+        local normalized = trigger
+        if normalized:sub(1, #snippetPrefix) ~= snippetPrefix then
+            normalized = snippetPrefix .. normalized
+        end
+
+        snippets[normalized] = expansion
+
+        for i = #snippetPrefix, #normalized do
+            snippetPrefixes[normalized:sub(1, i)] = true
+        end
+    end
+end
+
+local function startSnippetBuffer()
+    snippetBuffer = snippetPrefix
+    snippetMatch = nil
+    pendingSemicolon = false
+end
+
+local function expandSnippet(trigger, expansion)
+    isExpandingSnippet = true
+    resetSnippetBuffer()
+
+    hs.timer.doAfter(0, function()
+        deleteTypedTrigger(trigger)
+        typeText(expansion)
+        isExpandingSnippet = false
+    end)
+end
+
+local function appendSnippetCharacter(chars)
+    local candidate = snippetBuffer .. chars
+
+    if snippets[candidate] then
+        snippetBuffer = candidate
+        snippetMatch = candidate
+        return
+    end
+
+    if snippetPrefixes[candidate] then
+        snippetBuffer = candidate
+        snippetMatch = nil
+        return
+    end
+
+    resetSnippetBuffer()
+
+    if chars == ";" then
+        pendingSemicolon = true
+    end
 end
 
 -- 設定視窗動畫時間
@@ -82,7 +127,7 @@ function M.WindowTogglier()
 end
 
 function M.setupSnippets(definitions)
-    snippets = definitions or {}
+    prepareSnippets(definitions)
     resetSnippetBuffer()
 end
 
@@ -108,7 +153,15 @@ function M.startSnippets()
 
         local keyCode = event:getKeyCode()
         if keyCode == hs.keycodes.map.delete then
-            snippetBuffer = snippetBuffer:sub(1, -2)
+            if snippetBuffer then
+                if #snippetBuffer <= #snippetPrefix then
+                    resetSnippetBuffer()
+                else
+                    snippetBuffer = snippetBuffer:sub(1, -2)
+                end
+            else
+                pendingSemicolon = false
+            end
             return false
         end
 
@@ -118,28 +171,32 @@ function M.startSnippets()
         end
 
         if chars:match("%s") then
+            if chars == " " and snippetMatch then
+                local trigger = snippetMatch
+                local expansion = snippets[trigger]
+                expandSnippet(trigger, expansion)
+                return true
+            end
+
             resetSnippetBuffer()
             return false
         end
 
-        snippetBuffer = snippetBuffer .. chars
-        trimSnippetBuffer()
-
-        for trigger, expansion in pairs(snippets) do
-            if snippetBuffer:sub(-#trigger) == trigger then
-                isExpandingSnippet = true
-                resetSnippetBuffer()
-
-                hs.timer.doAfter(0, function()
-                    deleteTypedTrigger(trigger)
-                    typeText(expansion)
-                    isExpandingSnippet = false
-                end)
-
-                break
-            end
+        if snippetBuffer then
+            appendSnippetCharacter(chars)
+            return false
         end
 
+        if chars == ";" then
+            if pendingSemicolon then
+                startSnippetBuffer()
+            else
+                pendingSemicolon = true
+            end
+            return false
+        end
+
+        pendingSemicolon = false
         return false
     end)
 

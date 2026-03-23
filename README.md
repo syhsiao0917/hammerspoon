@@ -49,9 +49,14 @@
 使用方式：
 
 - 直接輸入完整 trigger，例如 `;;mail`
-- 不需要再按空白或 Enter，輸入完成後會立即展開
+- 在 trigger 後按空白鍵才會展開
+- 展開時會把你剛剛輸入的 trigger 與空白一起取代成 snippet 內容
+- 目前所有 snippet 都固定使用 `;;` 作為前綴
 
-這些內容可以在 [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 內的 `util.setupSnippets(...)` 修改。
+設定方式：
+
+- 在 [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 的 `util.setupSnippets(...)` 只需要填寫名稱本體，例如 `mail`
+- Hammerspoon 會自動把它轉成 `;;mail` 來觸發
 
 如果 snippet 沒有作用，先確認：
 

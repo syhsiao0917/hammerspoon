@@ -31,6 +31,11 @@ hs.hotkey.bind( hyper_shift , "tab", util.WindowTogglier )
 util.map("Obsidian", {"ctrl"}, "s", {}, "escape")
 util.map("Safari",   {"ctrl"}, "s", {"cmd"}, "[")
 
+util.setupSnippets({
+    [";;mail"] = "syhsiao0917@gmail.com",
+    [";;gh"] = "https://github.com/syhsiao0917",
+    [";;name"] = "syhsiao0917",
+})
 
 
 util.start()

@@ -102,6 +102,12 @@ function M.map(app, mod, key, outMod, outKey)
     end
 end
 
+function M.registerRemaps(definitions)
+    for _, remap in ipairs(definitions or {}) do
+        M.map(remap.app, remap.fromMods, remap.fromKey, remap.toMods, remap.toKey)
+    end
+end
+
 function M.WindowTogglier()
 
         local win = hs.window.focusedWindow()

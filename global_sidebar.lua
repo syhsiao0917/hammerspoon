@@ -3,7 +3,7 @@
 
 local M = {}
 
-local sidebarHotkeys = {
+local defaultSidebarHotkeys = {
     ["Finder"] = {mods = {"alt", "cmd"}, key = "s"},
     ["Mail"] = {mods = {"ctrl", "cmd"}, key = "s"},
     ["Reminders"] = {mods = {"alt", "cmd"}, key = "s"},
@@ -16,7 +16,7 @@ local sidebarHotkeys = {
     ["Arc"] = {mods = {"cmd"}, key = "s"},
 }
 
-local unsupportedApps = {
+local defaultUnsupportedApps = {
     ["Notes"] = "Apple Notes has folders/sidebar UI, but I have not recorded a reliable default toggle shortcut yet.",
     ["Obsidian"] = "Obsidian supports sidebar commands, but its sidebar hotkeys are usually user-assigned rather than a fixed default.",
     ["Preview"] = "Preview has a PDF sidebar, but I have not recorded a reliable default toggle shortcut yet.",
@@ -27,6 +27,17 @@ local unsupportedApps = {
     ["Photos"] = "Photos has a sidebar, but I have not recorded a reliable default toggle shortcut yet.",
     ["Books"] = "Books has a sidebar, but I have not recorded a reliable default toggle shortcut yet.",
 }
+
+local sidebarHotkeys = {}
+local unsupportedApps = {}
+
+local function copyTable(source)
+    local result = {}
+    for key, value in pairs(source) do
+        result[key] = value
+    end
+    return result
+end
 
 local function currentAppName()
     local app = hs.application.frontmostApplication()
@@ -57,8 +68,26 @@ function M.toggle()
     hs.alert.show(appName .. ": no sidebar mapping")
 end
 
+function M.configure(sidebarMappings, unsupported)
+    sidebarHotkeys = copyTable(defaultSidebarHotkeys)
+    unsupportedApps = copyTable(defaultUnsupportedApps)
+
+    for appName, shortcut in pairs(sidebarMappings or {}) do
+        sidebarHotkeys[appName] = shortcut
+        unsupportedApps[appName] = nil
+    end
+
+    for appName, reason in pairs(unsupported or {}) do
+        if not sidebarHotkeys[appName] then
+            unsupportedApps[appName] = reason
+        end
+    end
+end
+
 function M.setup(mods, key)
     hs.hotkey.bind(mods, key, M.toggle)
 end
+
+M.configure()
 
 return M

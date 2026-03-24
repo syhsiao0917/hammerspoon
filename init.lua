@@ -2,7 +2,7 @@
 hs.alert.show("load init.lua")
 
 local util = require("util") -- util.lua
-local finder = require("finder")
+local appRegistry = require("app_registry")
 local globalSidebar = require("global_sidebar")
 
 -- reload config
@@ -34,7 +34,8 @@ globalSidebar.setup(hyper, "1")
 
 util.map("Obsidian", {"ctrl"}, "s", {}, "escape")
 util.map("Safari",   {"ctrl"}, "s", {"cmd"}, "[")
-finder.setup(util)
+util.registerRemaps(appRegistry.remaps())
+globalSidebar.configure(appRegistry.sidebarMappings())
 
 util.setupSnippets({
     mail = "syhsiao0917@gmail.com",

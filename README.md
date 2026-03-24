@@ -17,9 +17,17 @@
 `util.lua` 提供共用功能，包括：
 
 - `map`：針對指定 App 啟用專屬快捷鍵重映射
+- `registerRemaps`：集中註冊 app modules 回傳的 remap 定義
 - `WindowTogglier`：切換目前視窗為「接近全螢幕」或「置中較小視窗」
 - `setupSnippets` / `startSnippets`：監聽輸入並展開已設定的 snippet
 - `start`：監聽目前啟用中的 App，動態套用對應熱鍵
+
+目前的 app-specific 架構是：
+
+- 每個 app module 盡量只回傳資料，例如 [`finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/finder.lua)
+- [`app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/app_registry.lua) 集中收集這些 app config
+- [`util.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/util.lua) 統一註冊 remaps
+- [`global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/global_sidebar.lua) 統一處理跨 App 的 sidebar toggle
 
 ## 快捷鍵
 

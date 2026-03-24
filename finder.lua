@@ -13,8 +13,6 @@
 -- 1. 不同 macOS 版本、語系、鍵盤配置下，部分快捷鍵可能不同。
 -- 2. 最準確仍以 Finder 選單列顯示的快捷鍵為準。
 
-local M = {}
-
 -- ====================
 -- Finder 專屬預設快捷鍵
 -- ====================
@@ -150,8 +148,16 @@ local M = {}
 -- 預設是 Duplicate
 -- 本專案改成送出 Cmd + Delete，也就是把所選項目移到垃圾桶
 
-function M.setup(util)
-    util.map("Finder", {"cmd"}, "d", {"cmd"}, "delete")
-end
-
-return M
+return {
+    name = "Finder",
+    sidebar = {mods = {"alt", "cmd"}, key = "s"},
+    remaps = {
+        {
+            app = "Finder",
+            fromMods = {"cmd"},
+            fromKey = "d",
+            toMods = {"cmd"},
+            toKey = "delete",
+        },
+    },
+}

@@ -4,9 +4,6 @@
 local M = {}
 
 function M.start(options)
-    local appModules = require("config.app_modules")
-    local launcherConfig = require("config.launcher_config")
-    local snippetConfig = require("config.snippet_config")
     local appRegistry = require("utils.app_registry")
     local configValidator = require("utils.config_validator")
     local globalSidebar = require("utils.global_sidebar")
@@ -17,6 +14,9 @@ function M.start(options)
 
     local hyper = options.hyper
     local hyperShift = options.hyper_shift
+    local appModules = options.app_modules or {}
+    local launcherConfig = options.launcher_config or {}
+    local snippetConfig = options.snippet_config or {}
 
     configValidator.validateAppModules(appModules)
 

@@ -11,6 +11,7 @@ local snippetPrefixes = {}
 local snippetTap = nil
 local snippetBuffer = nil
 local snippetMatch = nil
+local activeHotkeyApp = nil
 local pendingSemicolon = false
 local isExpandingSnippet = false
 
@@ -205,12 +206,19 @@ end
 
 -- App 切換邏輯與啟動
 function M.updateHotkeys(appName)
-    for _, appRules in pairs(remapTable) do
-        for _, hk in ipairs(appRules) do hk:disable() end
+    if appName == activeHotkeyApp then
+        return
     end
+
+    if activeHotkeyApp and remapTable[activeHotkeyApp] then
+        for _, hk in ipairs(remapTable[activeHotkeyApp]) do hk:disable() end
+    end
+
     if remapTable[appName] then
         for _, hk in ipairs(remapTable[appName]) do hk:enable() end
     end
+
+    activeHotkeyApp = appName
 end
 
 function M.start()

@@ -5,6 +5,7 @@ local appModules = require("config.app_modules")
 local launcherConfig = require("config.launcher_config")
 local snippetConfig = require("config.snippet_config")
 local appRegistry = require("utils.app_registry")
+local configValidator = require("utils.config_validator")
 local globalSidebar = require("utils.global_sidebar")
 local hotkeyManager = require("utils.util_hotkey_manager")
 local snippetEngine = require("utils.util_snippet_engine")
@@ -22,6 +23,8 @@ hyper = {"cmd","alt","ctrl"}
 hyper_shift = {"cmd","alt","ctrl", "shift"}
 
 local app = hs.application.launchOrFocus
+
+configValidator.validateAppModules(appModules)
 
 for _, launcher in ipairs(launcherConfig) do
     hs.hotkey.bind(hyper, launcher.key, function()

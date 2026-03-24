@@ -153,7 +153,6 @@ return {
     sidebar = {mods = {"alt", "cmd"}, key = "s"},
     remaps = {
         {
-            app = "Finder",
             fromMods = {"cmd"},
             fromKey = "d",
             toMods = {"cmd"},

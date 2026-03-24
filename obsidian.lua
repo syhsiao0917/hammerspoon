@@ -6,7 +6,6 @@ return {
     sidebarNote = "Obsidian supports sidebar commands, but its sidebar hotkeys are usually user-assigned rather than a fixed default.",
     remaps = {
         {
-            app = "Obsidian",
             fromMods = {"ctrl"},
             fromKey = "s",
             toMods = {},

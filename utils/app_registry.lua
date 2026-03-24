@@ -9,7 +9,13 @@ function M.remaps(apps)
     for _, appConfig in ipairs(apps or {}) do
         if appConfig.remaps then
             for _, remap in ipairs(appConfig.remaps) do
-                table.insert(remaps, remap)
+                table.insert(remaps, {
+                    app = appConfig.name,
+                    fromMods = remap.fromMods,
+                    fromKey = remap.fromKey,
+                    toMods = remap.toMods,
+                    toKey = remap.toKey,
+                })
             end
         end
     end

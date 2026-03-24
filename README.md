@@ -32,11 +32,34 @@
 - `hyper + g`：開啟 Notes
 - `hyper + f`：開啟 Notion
 - `hyper + shift + tab`：切換目前視窗大小
+- `hyper + ``：依目前 App 送出對應的 sidebar toggle 快捷鍵
+- `hyper + 1`：依目前 App 送出對應的 sidebar toggle 快捷鍵
 
 ## App 專屬快捷鍵
 
 - 在 `Obsidian` 中，`ctrl + s` 會送出 `escape`
 - 在 `Safari` 中，`ctrl + s` 會送出 `cmd + [`
+
+## Global Sidebar Toggle
+
+[`global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/global_sidebar.lua) 提供統一的 sidebar toggle 入口：
+
+- `hyper + ``：依目前前景 App 送出對應的側邊欄快捷鍵
+- `hyper + 1`：與 `hyper + `` 相同，作為容錯用的第二組入口
+
+目前已支援：
+
+- Finder
+- Mail
+- Reminders
+- Keychain Access
+- Safari
+- Notion
+- Visual Studio Code
+- Slack
+- Arc
+
+如果目前 App 沒有可靠的預設 sidebar toggle，Hammerspoon 會顯示提示，不會送出不確定的快捷鍵。
 
 ## Snippets
 

@@ -2,6 +2,8 @@
 hs.alert.show("load init.lua")
 
 local util = require("util") -- util.lua
+local finder = require("finder")
+local globalSidebar = require("global_sidebar")
 
 -- reload config
 hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
@@ -24,12 +26,15 @@ hs.hotkey.bind( hyper , "f", function() app("Notion") end)
 
 ----
 hs.hotkey.bind( hyper_shift , "tab", util.WindowTogglier )
+globalSidebar.setup(hyper, "`")
+globalSidebar.setup(hyper, "1")
 
 
 
 
 util.map("Obsidian", {"ctrl"}, "s", {}, "escape")
 util.map("Safari",   {"ctrl"}, "s", {"cmd"}, "[")
+finder.setup(util)
 
 util.setupSnippets({
     mail = "syhsiao0917@gmail.com",

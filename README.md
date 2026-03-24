@@ -10,7 +10,7 @@
 
 ## 主要功能
 
-`init.lua` 是入口檔，負責組裝核心模組、註冊全域快捷鍵，並監看 `~/.hammerspoon/` 目錄變更後自動重新載入。
+`init.lua` 是入口檔，負責載入 bootstrap、註冊 reload 快捷鍵，並監看 `~/.hammerspoon/` 目錄變更後自動重新載入。
 
 目前建議將 `~/.hammerspoon` 直接連到這個 repo，讓 Hammerspoon 實際使用這份設定。
 
@@ -22,6 +22,7 @@
 
 核心模組：
 
+- [`utils/bootstrap.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/bootstrap.lua)：組裝 config 與 runtime modules，並啟動整個系統
 - [`utils/util_launcher.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_launcher.lua)：集中註冊 app launcher 快捷鍵
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
 - [`utils/util_snippet_engine.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_snippet_engine.lua)：處理 `;;` snippet 展開

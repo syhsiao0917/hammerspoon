@@ -31,6 +31,7 @@
 
 - [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 明確列出 launcher 與 snippets 等使用者設定
 - 每個 app module 盡量只回傳資料，例如 [`apps/finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/finder.lua)、[`apps/safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/safari.lua)、[`apps/obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/obsidian.lua)
+- app modules 可以透過 [`utils/util_app_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_config.lua) 的 `remap(...)` helper 用 one-line 方式追加 remap
 - [`utils/util_app_loader.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_loader.lua) 自動掃描 `apps/` 並載入 app modules
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua) 只負責聚合這些 app config
 - [`utils/config_validator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/config_validator.lua) 先驗證 app config 內容，再進入註冊流程

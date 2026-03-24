@@ -13,6 +13,10 @@
 -- 1. 不同 macOS 版本、語系、鍵盤配置下，部分快捷鍵可能不同。
 -- 2. 最準確仍以 Finder 選單列顯示的快捷鍵為準。
 
+local appConfig = require("utils.util_app_config")
+local r = appConfig.remap
+local remaps = {}
+
 -- ====================
 -- Finder 專屬預設快捷鍵
 -- ====================
@@ -148,15 +152,14 @@
 -- 預設是 Duplicate
 -- 本專案改成送出 Cmd + Delete，也就是把所選項目移到垃圾桶
 
+-- Control + S
+-- 本專案改成送出 Option + Cmd + L，也就是前往 Downloads
+
+table.insert(remaps, r("cmd", "d", "cmd", "delete"))
+table.insert(remaps, r("ctrl", "s", {"alt", "cmd"}, "l"))
+
 return {
     name = "Finder",
     sidebar = {mods = {"alt", "cmd"}, key = "s"},
-    remaps = {
-        {
-            fromMods = {"cmd"},
-            fromKey = "d",
-            toMods = {"cmd"},
-            toKey = "delete",
-        },
-    },
+    remaps = remaps,
 }

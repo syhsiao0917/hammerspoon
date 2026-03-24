@@ -10,24 +10,24 @@
 
 ## 主要功能
 
-`init.lua` 是入口檔，負責註冊快捷鍵、載入 `util.lua`，並監看 `~/.hammerspoon/` 目錄變更後自動重新載入。
+`init.lua` 是入口檔，負責組裝核心模組、註冊全域快捷鍵，並監看 `~/.hammerspoon/` 目錄變更後自動重新載入。
 
 目前建議將 `~/.hammerspoon` 直接連到這個 repo，讓 Hammerspoon 實際使用這份設定。
 
-`util.lua` 提供共用功能，包括：
+核心模組：
 
-- `map`：針對指定 App 啟用專屬快捷鍵重映射
-- `registerRemaps`：集中註冊 app modules 回傳的 remap 定義
-- `WindowTogglier`：切換目前視窗為「接近全螢幕」或「置中較小視窗」
-- `setupSnippets` / `startSnippets`：監聽輸入並展開已設定的 snippet
-- `start`：監聽目前啟用中的 App，動態套用對應熱鍵
+- [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
+- [`utils/util_snippet_engine.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_snippet_engine.lua)：處理 `;;` snippet 展開
+- [`utils/util_window_actions.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_window_actions.lua)：處理視窗相關動作
+- [`utils/global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/global_sidebar.lua)：統一處理跨 App 的 sidebar toggle
+- [`utils/util.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util.lua)：薄相容層，包住上述核心模組
 
 目前的 app-specific 架構是：
 
-- 每個 app module 盡量只回傳資料，例如 [`finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/finder.lua)
+- 每個 app module 盡量只回傳資料，例如 [`finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/finder.lua)、[`safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/safari.lua)、[`obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/obsidian.lua)
 - [`app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/app_registry.lua) 集中收集這些 app config
-- [`util.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/util.lua) 統一註冊 remaps
-- [`global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/global_sidebar.lua) 統一處理跨 App 的 sidebar toggle
+- [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua) 統一註冊 remaps
+- [`utils/global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/global_sidebar.lua) 統一處理 sidebar mappings
 
 ## 快捷鍵
 
@@ -47,10 +47,11 @@
 
 - 在 `Obsidian` 中，`ctrl + s` 會送出 `escape`
 - 在 `Safari` 中，`ctrl + s` 會送出 `cmd + [`
+- 在 `Finder` 中，`cmd + d` 會送出 `cmd + delete`
 
 ## Global Sidebar Toggle
 
-[`global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/global_sidebar.lua) 提供統一的 sidebar toggle 入口：
+[`utils/global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/global_sidebar.lua) 提供統一的 sidebar toggle 入口：
 
 - `hyper + ``：依目前前景 App 送出對應的側邊欄快捷鍵
 - `hyper + 1`：與 `hyper + `` 相同，作為容錯用的第二組入口
@@ -86,7 +87,7 @@
 
 設定方式：
 
-- 在 [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 的 `util.setupSnippets(...)` 只需要填寫名稱本體，例如 `mail`
+- 在 [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 的 `snippetEngine.configure(...)` 只需要填寫名稱本體，例如 `mail`
 - Hammerspoon 會自動把它轉成 `;;mail` 來觸發
 
 如果 snippet 沒有作用，先確認：

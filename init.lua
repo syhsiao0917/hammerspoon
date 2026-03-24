@@ -1,9 +1,11 @@
 
 hs.alert.show("load init.lua")
 
-local util = require("util") -- util.lua
 local appRegistry = require("app_registry")
-local globalSidebar = require("global_sidebar")
+local globalSidebar = require("utils.global_sidebar")
+local hotkeyManager = require("utils.util_hotkey_manager")
+local snippetEngine = require("utils.util_snippet_engine")
+local windowActions = require("utils.util_window_actions")
 
 -- reload config
 hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
@@ -25,25 +27,21 @@ hs.hotkey.bind( hyper , "g", function() app("Notes") end)
 hs.hotkey.bind( hyper , "f", function() app("Notion") end)
 
 ----
-hs.hotkey.bind( hyper_shift , "tab", util.WindowTogglier )
+hs.hotkey.bind( hyper_shift , "tab", windowActions.toggleFocusedWindowSize )
 globalSidebar.setup(hyper, "`")
 globalSidebar.setup(hyper, "1")
 
-
-
-
-util.map("Obsidian", {"ctrl"}, "s", {}, "escape")
-util.map("Safari",   {"ctrl"}, "s", {"cmd"}, "[")
-util.registerRemaps(appRegistry.remaps())
+hotkeyManager.registerRemaps(appRegistry.remaps())
 globalSidebar.configure(appRegistry.sidebarMappings())
 
-util.setupSnippets({
+snippetEngine.configure({
     mail = "syhsiao0917@gmail.com",
     gh = "https://github.com/syhsiao0917",
     name = "syhsiao0917",
 })
 
 
-util.start()
+hotkeyManager.start()
+snippetEngine.start()
 
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()

@@ -5,6 +5,8 @@ local M = {}
 
 local apps = {
     require("finder"),
+    require("safari"),
+    require("obsidian"),
 }
 
 function M.apps()

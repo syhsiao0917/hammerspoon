@@ -7,6 +7,7 @@ local snippetConfig = require("config.snippet_config")
 local appRegistry = require("utils.app_registry")
 local configValidator = require("utils.config_validator")
 local globalSidebar = require("utils.global_sidebar")
+local launcher = require("utils.util_launcher")
 local hotkeyManager = require("utils.util_hotkey_manager")
 local snippetEngine = require("utils.util_snippet_engine")
 local windowActions = require("utils.util_window_actions")
@@ -22,15 +23,8 @@ hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
 hyper = {"cmd","alt","ctrl"}
 hyper_shift = {"cmd","alt","ctrl", "shift"}
 
-local app = hs.application.launchOrFocus
-
 configValidator.validateAppModules(appModules)
-
-for _, launcher in ipairs(launcherConfig) do
-    hs.hotkey.bind(hyper, launcher.key, function()
-        app(launcher.app)
-    end)
-end
+launcher.register(hyper, launcherConfig)
 
 ----
 hs.hotkey.bind( hyper_shift , "tab", windowActions.toggleFocusedWindowSize )

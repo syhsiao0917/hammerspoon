@@ -22,6 +22,7 @@
 
 核心模組：
 
+- [`utils/util_launcher.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_launcher.lua)：集中註冊 app launcher 快捷鍵
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
 - [`utils/util_snippet_engine.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_snippet_engine.lua)：處理 `;;` snippet 展開
 - [`utils/util_window_actions.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_window_actions.lua)：處理視窗相關動作
@@ -33,11 +34,15 @@
 目前的 app-specific 架構是：
 
 - [`config/app_modules.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/app_modules.lua) 明確列出要使用的 app modules
-- 每個 app module 盡量只回傳資料，例如 [`finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/finder.lua)、[`safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/safari.lua)、[`obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/obsidian.lua)
+- 每個 app module 盡量只回傳資料，例如 [`apps/finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/finder.lua)、[`apps/safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/safari.lua)、[`apps/obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/obsidian.lua)
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua) 只負責聚合這些 app config
 - [`utils/config_validator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/config_validator.lua) 先驗證 app config 內容，再進入註冊流程
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua) 統一註冊 remaps
 - [`utils/global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/global_sidebar.lua) 統一處理 sidebar mappings
+
+參考資料：
+
+- [`references/sidebar_shortcuts_reference.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/references/sidebar_shortcuts_reference.lua)：整理各 App 側邊欄相關快捷鍵的研究筆記
 
 ## 快捷鍵
 

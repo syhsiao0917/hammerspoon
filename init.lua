@@ -1,11 +1,20 @@
 
 hs.alert.show("load init.lua")
 
-local appRegistry = require("app_registry")
+local finder = require("finder")
+local safari = require("safari")
+local obsidian = require("obsidian")
+local appRegistry = require("utils.app_registry")
 local globalSidebar = require("utils.global_sidebar")
 local hotkeyManager = require("utils.util_hotkey_manager")
 local snippetEngine = require("utils.util_snippet_engine")
 local windowActions = require("utils.util_window_actions")
+
+local appModules = {
+    finder,
+    safari,
+    obsidian,
+}
 
 -- reload config
 hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
@@ -31,8 +40,8 @@ hs.hotkey.bind( hyper_shift , "tab", windowActions.toggleFocusedWindowSize )
 globalSidebar.setup(hyper, "`")
 globalSidebar.setup(hyper, "1")
 
-hotkeyManager.registerRemaps(appRegistry.remaps())
-globalSidebar.configure(appRegistry.sidebarMappings())
+hotkeyManager.registerRemaps(appRegistry.remaps(appModules))
+globalSidebar.configure(appRegistry.sidebarMappings(appModules))
 
 snippetEngine.configure({
     mail = "syhsiao0917@gmail.com",

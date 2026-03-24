@@ -14,6 +14,12 @@
 
 目前建議將 `~/.hammerspoon` 直接連到這個 repo，讓 Hammerspoon 實際使用這份設定。
 
+設定檔：
+
+- [`config/app_modules.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/app_modules.lua)：列出要載入的 app modules
+- [`config/launcher_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/launcher_config.lua)：集中管理 app launcher 對應
+- [`config/snippet_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/snippet_config.lua)：集中管理 snippets
+
 核心模組：
 
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
@@ -25,7 +31,7 @@
 
 目前的 app-specific 架構是：
 
-- [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 明確載入要使用的 app modules
+- [`config/app_modules.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/app_modules.lua) 明確列出要使用的 app modules
 - 每個 app module 盡量只回傳資料，例如 [`finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/finder.lua)、[`safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/safari.lua)、[`obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/obsidian.lua)
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua) 只負責聚合這些 app config
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua) 統一註冊 remaps
@@ -89,7 +95,7 @@
 
 設定方式：
 
-- 在 [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 的 `snippetEngine.configure(...)` 只需要填寫名稱本體，例如 `mail`
+- 在 [`config/snippet_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/config/snippet_config.lua) 只需要填寫名稱本體，例如 `mail`
 - Hammerspoon 會自動把它轉成 `;;mail` 來觸發
 
 如果 snippet 沒有作用，先確認：

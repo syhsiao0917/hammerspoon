@@ -1,20 +1,14 @@
 
 hs.alert.show("load init.lua")
 
-local finder = require("finder")
-local safari = require("safari")
-local obsidian = require("obsidian")
+local appModules = require("config.app_modules")
+local launcherConfig = require("config.launcher_config")
+local snippetConfig = require("config.snippet_config")
 local appRegistry = require("utils.app_registry")
 local globalSidebar = require("utils.global_sidebar")
 local hotkeyManager = require("utils.util_hotkey_manager")
 local snippetEngine = require("utils.util_snippet_engine")
 local windowActions = require("utils.util_window_actions")
-
-local appModules = {
-    finder,
-    safari,
-    obsidian,
-}
 
 -- reload config
 hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
@@ -29,11 +23,11 @@ hyper_shift = {"cmd","alt","ctrl", "shift"}
 
 local app = hs.application.launchOrFocus
 
-hs.hotkey.bind( hyper , "3", function() app("Finder") end)
-hs.hotkey.bind( hyper , "s", function() app("Safari") end)
-hs.hotkey.bind( hyper , "t", function() app("MacVim") end)
-hs.hotkey.bind( hyper , "g", function() app("Notes") end)
-hs.hotkey.bind( hyper , "f", function() app("Notion") end)
+for _, launcher in ipairs(launcherConfig) do
+    hs.hotkey.bind(hyper, launcher.key, function()
+        app(launcher.app)
+    end)
+end
 
 ----
 hs.hotkey.bind( hyper_shift , "tab", windowActions.toggleFocusedWindowSize )
@@ -42,12 +36,7 @@ globalSidebar.setup(hyper, "1")
 
 hotkeyManager.registerRemaps(appRegistry.remaps(appModules))
 globalSidebar.configure(appRegistry.sidebarMappings(appModules))
-
-snippetEngine.configure({
-    mail = "syhsiao0917@gmail.com",
-    gh = "https://github.com/syhsiao0917",
-    name = "syhsiao0917",
-})
+snippetEngine.configure(snippetConfig)
 
 
 hotkeyManager.start()

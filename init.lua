@@ -30,4 +30,4 @@ bootstrap.start({
     snippet_config = snippetConfig,
 })
 
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+-- hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()

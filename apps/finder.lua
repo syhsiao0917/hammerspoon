@@ -27,9 +27,8 @@ local remaps = {}
 -- 本專案改成送出 Cmd + Delete，也就是把所選項目移到垃圾桶
 table.insert(remaps, r("cmd", "d", "cmd", "delete"))
 
--- Control + S
 -- 本專案改成送出 Option + Cmd + L，也就是前往 Downloads
-table.insert(remaps, r("ctrl", "s", {"alt", "cmd"}, "l"))
+table.insert(remaps, r("alt", "d", {"alt", "cmd"}, "l"))
 
 -- ====================
 -- Finder 專屬預設快捷鍵

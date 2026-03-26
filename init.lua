@@ -15,6 +15,10 @@ local launcherConfig = {
     {key = "t", app = "MacVim"},
     {key = "g", app = "Notes"},
     {key = "f", app = "Notion"},
+    {key = "c", app = "Visual Studio Code"},
+    {key = "v", app = "Codex"},
+
+
 }
 
 local snippetConfig = {

@@ -6,6 +6,7 @@
 - 重新載入 Hammerspoon 設定
 - 在特定 App 中做快捷鍵重映射
 - 快速切換目前視窗的大小與位置
+- 在按住 `hyper + shift` 時顯示滑鼠旁的移動提示
 - 基本的文字 snippet 展開
 
 ## 主要功能
@@ -22,6 +23,7 @@
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
 - [`utils/util_snippet_engine.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_snippet_engine.lua)：處理 `;;` snippet 展開
 - [`utils/util_window_actions.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_window_actions.lua)：處理視窗相關動作
+- [`utils/util_modifier_indicator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_modifier_indicator.lua)：在按住指定 modifier chord 時顯示滑鼠旁提示
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua)：聚合 app modules 回傳的設定資料
 - [`utils/config_validator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/config_validator.lua)：在啟動時驗證 app module schema
 - [`utils/global_sidebar.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/global_sidebar.lua)：統一處理跨 App 的 sidebar toggle
@@ -53,6 +55,7 @@
 - `hyper + g`：開啟 Notes
 - `hyper + f`：開啟 Notion
 - `hyper + shift + tab`：切換目前視窗大小
+- 按住 `hyper + shift`：在滑鼠旁顯示 `WIN` 提示，方便辨識目前可用滑鼠移動視窗
 - `hyper + ``：依目前 App 送出對應的 sidebar toggle 快捷鍵
 - `hyper + 1`：依目前 App 送出對應的 sidebar toggle 快捷鍵
 

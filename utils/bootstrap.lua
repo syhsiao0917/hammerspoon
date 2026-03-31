@@ -4,6 +4,7 @@
 local M = {}
 
 function M.start(options)
+    local clipboardCapture = require("utils.util_clipboard_capture")
     local appRegistry = require("utils.app_registry")
     local appLoader = require("utils.util_app_loader")
     local configValidator = require("utils.config_validator")
@@ -17,6 +18,7 @@ function M.start(options)
     local hyper = options.hyper
     local hyperShift = options.hyper_shift
     local appModules = appLoader.load()
+    local clipboardCaptureConfig = options.clipboard_capture_config
     local launcherConfig = options.launcher_config or {}
     local snippetConfig = options.snippet_config or {}
 
@@ -27,11 +29,13 @@ function M.start(options)
     modifierIndicator.start(hyperShift)
     globalSidebar.setup(hyper, "`")
     globalSidebar.setup(hyper, "1")
+    clipboardCapture.configure(clipboardCaptureConfig or {})
 
     hotkeyManager.registerRemaps(appRegistry.remaps(appModules))
     globalSidebar.configure(appRegistry.sidebarMappings(appModules))
     snippetEngine.configure(snippetConfig)
 
+    clipboardCapture.start()
     hotkeyManager.start()
     snippetEngine.start()
 end

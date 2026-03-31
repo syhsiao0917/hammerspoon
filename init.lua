@@ -27,9 +27,15 @@ local snippetConfig = {
     name = "syhsiao0917",
 }
 
+local clipboardCaptureConfig = {
+    target_app = "Notes",
+    hotkey = {mods = hyper, key = "n"},
+}
+
 bootstrap.start({
     hyper = hyper,
     hyper_shift = hyper_shift,
+    clipboard_capture_config = clipboardCaptureConfig,
     launcher_config = launcherConfig,
     snippet_config = snippetConfig,
 })

@@ -8,7 +8,7 @@
 - 快速切換目前視窗的大小與位置
 - 在按住 `hyper + shift` 時顯示滑鼠旁的移動提示
 - 基本的文字 snippet 展開
-- 把目前剪貼簿內容一鍵建立成新的 Apple Notes 筆記
+- 把目前剪貼簿內容一鍵建立成新的 Apple Notes 筆記，或 append 到 Obsidian 的當日日記
 
 ## 主要功能
 
@@ -24,7 +24,7 @@
 - [`utils/util_hotkey_manager.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_hotkey_manager.lua)：集中註冊與切換 app-specific remaps
 - [`utils/util_snippet_engine.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_snippet_engine.lua)：處理 `;;` snippet 展開
 - [`utils/util_window_actions.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_window_actions.lua)：處理視窗相關動作
-- [`utils/util_clipboard_capture.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_clipboard_capture.lua)：把目前剪貼簿內容送進新的 Apple Notes 筆記
+- [`utils/util_clipboard_capture.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_clipboard_capture.lua)：把目前剪貼簿內容送進新的 Apple Notes 筆記，或 append 到 Obsidian 的當日日記
 - [`utils/util_modifier_indicator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_modifier_indicator.lua)：在按住指定 modifier chord 時顯示滑鼠旁提示
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua)：聚合 app modules 回傳的設定資料
 - [`utils/config_validator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/config_validator.lua)：在啟動時驗證 app module schema
@@ -56,6 +56,7 @@
 - `hyper + t`：開啟 MacVim
 - `hyper + g`：開啟 Notes
 - `hyper + n`：開啟 Notes、建立新筆記，並貼上目前剪貼簿內容
+- `hyper + o`：開啟 Obsidian 的當日日記，跳到文末，並貼上目前剪貼簿內容
 - `hyper + f`：開啟 Notion
 - `hyper + shift + tab`：切換目前視窗大小
 - 按住 `hyper + shift`：在滑鼠旁顯示 `WIN` 提示，方便辨識目前可用滑鼠移動視窗
@@ -114,8 +115,8 @@
 - Hammerspoon 已重新載入設定
 - macOS 已授權 Hammerspoon 的 Accessibility 權限
 
-如果 `hyper + n` 沒有成功建立並貼上新筆記，先確認：
+如果 `hyper + n` 或 `hyper + o` 沒有成功貼上內容，先確認：
 
 - macOS 已授權 Hammerspoon 的 Accessibility 權限
-- `Notes` 的新增筆記快捷鍵仍是 `cmd + n`
-- 前景沒有系統對話框擋住 `Notes` 接收快捷鍵
+- Obsidian 已啟用 Daily notes core plugin
+- 前景沒有系統對話框擋住目標筆記 App 接收快捷鍵

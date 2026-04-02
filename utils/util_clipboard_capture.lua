@@ -1,10 +1,10 @@
 -- util_clipboard_capture.lua
--- Global hotkey to create a new Apple Notes note from the current clipboard.
+-- Global hotkeys to create a new note from the current clipboard.
 
 local M = {}
 
-local config = nil
-local hotkey = nil
+local bindings = {}
+local hotkeys = {}
 
 local function show(message)
     hs.alert.show(message)
@@ -24,44 +24,104 @@ local function hasClipboardPayload()
     return #contentTypes > 0
 end
 
-local function triggerNotesCapture()
+local function triggerCapture(binding)
     if not hasClipboardPayload() then
         show("Clipboard is empty")
         return
     end
 
-    hs.application.launchOrFocus(config.target_app)
+    if binding.open_url then
+        hs.urlevent.openURL(binding.open_url)
 
-    hs.timer.doAfter(config.create_delay, function()
+        hs.timer.doAfter(binding.create_delay, function()
+            if binding.before_paste then
+                binding.before_paste()
+            end
+
+            hs.timer.doAfter(binding.paste_delay, function()
+                hs.eventtap.keyStroke({"cmd"}, "v", 0)
+
+                if binding.after_paste then
+                    hs.timer.doAfter(binding.after_paste_delay, function()
+                        binding.after_paste()
+                    end)
+                end
+
+                show("Clipboard captured to " .. binding.target_app)
+            end)
+        end)
+        return
+    end
+
+    hs.application.launchOrFocus(binding.target_app)
+
+    hs.timer.doAfter(binding.create_delay, function()
         hs.eventtap.keyStroke({"cmd"}, "n", 0)
 
-        hs.timer.doAfter(config.paste_delay, function()
+        hs.timer.doAfter(binding.paste_delay, function()
             hs.eventtap.keyStroke({"cmd"}, "v", 0)
-            show("Clipboard captured to Notes")
+
+            if binding.after_paste then
+                hs.timer.doAfter(binding.after_paste_delay, function()
+                    binding.after_paste()
+                end)
+            end
+
+            show("Clipboard captured to " .. binding.target_app)
         end)
     end)
 end
 
-function M.configure(options)
-    config = {
-        target_app = options.target_app or "Notes",
-        hotkey = options.hotkey or {mods = {"cmd", "alt", "ctrl"}, key = "n"},
+local function normalizeBinding(options)
+    return {
+        target_app = options.target_app,
+        hotkey = options.hotkey,
         create_delay = options.create_delay or 0.4,
         paste_delay = options.paste_delay or 0.2,
+        after_paste_delay = options.after_paste_delay or 0.1,
+        open_url = options.open_url,
+        before_paste = options.before_paste,
+        after_paste = options.after_paste,
+    }
+end
+
+function M.configure(options)
+    local configuredBindings = options.bindings
+
+    if configuredBindings and #configuredBindings > 0 then
+        bindings = {}
+        for _, binding in ipairs(configuredBindings) do
+            table.insert(bindings, normalizeBinding(binding))
+        end
+        return
+    end
+
+    bindings = {
+        normalizeBinding({
+            target_app = options.target_app or "Notes",
+            hotkey = options.hotkey or {mods = {"cmd", "alt", "ctrl"}, key = "n"},
+            create_delay = options.create_delay,
+            paste_delay = options.paste_delay,
+        }),
     }
 end
 
 function M.start()
-    if not config then
+    if #bindings == 0 then
         return
     end
 
-    if hotkey then
+    for _, hotkey in ipairs(hotkeys) do
         hotkey:delete()
-        hotkey = nil
     end
 
-    hotkey = hs.hotkey.bind(config.hotkey.mods, config.hotkey.key, triggerNotesCapture)
+    hotkeys = {}
+
+    for _, binding in ipairs(bindings) do
+        table.insert(hotkeys, hs.hotkey.bind(binding.hotkey.mods, binding.hotkey.key, function()
+            triggerCapture(binding)
+        end))
+    end
 end
 
 return M

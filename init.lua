@@ -28,8 +28,26 @@ local snippetConfig = {
 }
 
 local clipboardCaptureConfig = {
-    target_app = "Notes",
-    hotkey = {mods = hyper, key = "n"},
+    bindings = {
+        {target_app = "Notes", hotkey = {mods = hyper, key = "n"}},
+        {
+            target_app = "Obsidian Daily Note",
+            hotkey = {mods = hyper, key = "o"},
+            open_url = "obsidian://daily",
+            create_delay = 0.8,
+            paste_delay = 0.2,
+            after_paste_delay = 0.1,
+            before_paste = function()
+                hs.eventtap.keyStroke({"cmd"}, "down", 0)
+                hs.eventtap.keyStroke({}, "return", 0)
+                hs.eventtap.keyStroke({}, "return", 0)
+            end,
+            after_paste = function()
+                hs.eventtap.keyStroke({}, "return", 0)
+                hs.eventtap.keyStroke({}, "return", 0)
+            end,
+        },
+    },
 }
 
 bootstrap.start({

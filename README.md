@@ -66,8 +66,11 @@
 ## App 專屬快捷鍵
 
 - 在 `Obsidian` 中，`ctrl + s` 會送出 `escape`
+- 在 `Obsidian` 中，`ctrl + e` 會送出 `cmd + o`
 - 在 `Safari` 中，`ctrl + s` 會送出 `cmd + [`
 - 在 `Finder` 中，`cmd + d` 會送出 `cmd + delete`
+- 在 `Notes` 中，`ctrl + e` 會送出 `option + cmd + f`
+- 在 `Notion` 中，`ctrl + e` 會送出 `cmd + p`
 
 ## Global Sidebar Toggle
 

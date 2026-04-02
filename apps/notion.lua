@@ -11,7 +11,7 @@ local remaps = {}
 table.insert(remaps, r("ctrl", "g", {"cmd", "shift"}, "h"))
 
 -- Control + E
--- 本專案改成送出 Cmd + P，也就是搜尋
+-- 本專案改成送出 Cmd + P，作為全域搜尋 / 快速切換入口
 table.insert(remaps, r("ctrl", "e", "cmd", "p"))
 
 return {

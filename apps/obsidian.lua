@@ -10,6 +10,10 @@ local remaps = {}
 -- 本專案改成送出 Escape，方便快速離開編輯焦點
 table.insert(remaps, r("ctrl", "s", "", "escape"))
 
+-- Control + E
+-- 本專案改成送出 Cmd + O，也就是 Quick switcher
+table.insert(remaps, r("ctrl", "e", "cmd", "o"))
+
 return {
     name = name,
     sidebarNote = "Obsidian supports sidebar commands, but its sidebar hotkeys are usually user-assigned rather than a fixed default.",

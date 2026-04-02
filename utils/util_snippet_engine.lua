@@ -55,12 +55,21 @@ local function startBuffer()
 end
 
 local function expandSnippet(trigger, expansion)
+    local resolvedExpansion = expansion
+    if type(expansion) == "function" then
+        resolvedExpansion = expansion()
+    end
+
+    if type(resolvedExpansion) ~= "string" then
+        resolvedExpansion = tostring(resolvedExpansion or "")
+    end
+
     isExpandingSnippet = true
     resetBuffer()
 
     hs.timer.doAfter(0, function()
         deleteTypedTrigger(trigger)
-        typeText(expansion)
+        typeText(resolvedExpansion)
         isExpandingSnippet = false
     end)
 end

@@ -25,6 +25,9 @@ local snippetConfig = {
     mail = "syhsiao0917@gmail.com",
     gh = "https://github.com/syhsiao0917",
     name = "syhsiao0917",
+    d = function()
+        return os.date("%Y%m%d")
+    end,
 }
 
 local clipboardCaptureConfig = {

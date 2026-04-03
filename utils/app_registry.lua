@@ -26,16 +26,19 @@ end
 function M.sidebarMappings(apps)
     local mappings = {}
     local unsupported = {}
+    local ignored = {}
 
     for _, appConfig in ipairs(apps or {}) do
-        if appConfig.sidebar then
+        if appConfig.ignoreSidebarToggle then
+            ignored[appConfig.name] = true
+        elseif appConfig.sidebar then
             mappings[appConfig.name] = appConfig.sidebar
         elseif appConfig.sidebarNote then
             unsupported[appConfig.name] = appConfig.sidebarNote
         end
     end
 
-    return mappings, unsupported
+    return mappings, unsupported, ignored
 end
 
 return M

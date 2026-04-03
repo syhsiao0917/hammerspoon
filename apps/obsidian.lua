@@ -16,6 +16,6 @@ table.insert(remaps, r("ctrl", "e", "cmd", "o"))
 
 return {
     name = name,
-    sidebarNote = "Obsidian supports sidebar commands, but its sidebar hotkeys are usually user-assigned rather than a fixed default.",
+    ignoreSidebarToggle = true,
     remaps = remaps,
 }

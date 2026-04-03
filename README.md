@@ -91,7 +91,9 @@
 - Slack
 - Arc
 
-如果目前 App 沒有可靠的預設 sidebar toggle，Hammerspoon 會顯示提示，不會送出不確定的快捷鍵。
+如果目前 App 有 sidebar mapping，Hammerspoon 會攔下這組快捷鍵並送出對應的側邊欄快捷鍵。
+
+如果目前 App 沒有 sidebar mapping，Hammerspoon 不會攔截，原本的 `hyper + `` / `hyper + 1` 會直接 pass 給該 App。
 
 ## Snippets
 

@@ -15,6 +15,12 @@ local function expectString(value, name)
     end
 end
 
+local function expectBoolean(value, name)
+    if type(value) ~= "boolean" then
+        error(name .. " must be a boolean")
+    end
+end
+
 local function expectMods(value, name)
     expectTable(value, name)
 end
@@ -60,6 +66,10 @@ function M.validateAppModules(appModules)
 
         if appConfig.sidebarNote then
             expectString(appConfig.sidebarNote, appConfig.name .. ".sidebarNote")
+        end
+
+        if appConfig.ignoreSidebarToggle ~= nil then
+            expectBoolean(appConfig.ignoreSidebarToggle, appConfig.name .. ".ignoreSidebarToggle")
         end
     end
 end

@@ -15,6 +15,7 @@ function M.remaps(apps)
                     fromKey = remap.fromKey,
                     toMods = remap.toMods,
                     toKey = remap.toKey,
+                    message = remap.message,
                 })
             end
         end

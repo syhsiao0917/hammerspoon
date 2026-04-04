@@ -8,7 +8,7 @@ local remapTable = {}
 local activeAppName = nil
 local watcher = nil
 
-function M.map(app, mod, key, outMod, outKey)
+function M.map(app, mod, key, outMod, outKey, options)
     local apps = type(app) == "table" and app or {app}
 
     for _, appName in ipairs(apps) do
@@ -18,13 +18,18 @@ function M.map(app, mod, key, outMod, outKey)
 
         table.insert(remapTable[appName], hs.hotkey.new(mod, key, function()
             press(outMod or {}, outKey or key)
+            if options and options.message then
+                hs.alert.show(options.message)
+            end
         end))
     end
 end
 
 function M.registerRemaps(definitions)
     for _, remap in ipairs(definitions or {}) do
-        M.map(remap.app, remap.fromMods, remap.fromKey, remap.toMods, remap.toKey)
+        M.map(remap.app, remap.fromMods, remap.fromKey, remap.toMods, remap.toKey, {
+            message = remap.message,
+        })
     end
 end
 

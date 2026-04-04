@@ -6,7 +6,9 @@ local appConfig = require("utils.util_app_config")
 local r = appConfig.remap
 local remaps = {}
 
-table.insert(remaps, r({"cmd", "alt", "ctrl"}, "v", {"alt"}, "return"))
+table.insert(remaps, r({"cmd", "alt", "ctrl"}, "v", {"alt"}, "return", {
+    message = "Pasted",
+}))
 
 return {
     name = name,

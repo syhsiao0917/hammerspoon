@@ -70,6 +70,9 @@
 - 在 `Obsidian` 中，`ctrl + e` 會送出 `cmd + o`
 - 在 `Safari` 中，`ctrl + s` 會送出 `cmd + [`
 - 在 `Finder` 中，`cmd + d` 會送出 `cmd + delete`
+- 在 `Finder` 中，`ctrl + u` 會送出 `cmd + up`
+- 在 `Finder` 中，`ctrl + shift + c` 會複製目前資料夾路徑到剪貼簿
+- 在 `Finder` 中，`ctrl + c` 會複製目前所選檔案或資料夾路徑到剪貼簿
 - 在 `Notes` 中，`ctrl + e` 會送出 `option + cmd + f`
 - 在 `Notion` 中，`ctrl + e` 會送出 `cmd + p`
 - 在 `Raycast` 中，`hyper + v` 會送出 `option + return`，並顯示 `Pasted`

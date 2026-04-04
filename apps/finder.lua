@@ -15,8 +15,65 @@
 
 local name = "Finder"
 local appConfig = require("utils.util_app_config")
+local action = appConfig.action
 local r = appConfig.remap
 local remaps = {}
+
+local function runAppleScript(script)
+    local ok, result = hs.osascript.applescript(script)
+    if ok then
+        return result
+    end
+
+    return nil
+end
+
+local function copyCurrentFolderPath()
+    local path = runAppleScript([[
+        tell application "Finder"
+            if (count of Finder windows) is 0 then
+                return POSIX path of (target of desktop as alias)
+            end if
+
+            return POSIX path of (target of front Finder window as alias)
+        end tell
+    ]])
+
+    if not path or path == "" then
+        hs.alert.show("No Finder folder path")
+        return
+    end
+
+    hs.pasteboard.setContents(path)
+    hs.alert.show("Copied current folder path")
+end
+
+local function copySelectedPaths()
+    local paths = runAppleScript([[
+        tell application "Finder"
+            set selectedItems to selection
+            if (count of selectedItems) is 0 then
+                return ""
+            end if
+
+            set text item delimiters of AppleScript to linefeed
+            set posixPaths to {}
+            repeat with selectedItem in selectedItems
+                set end of posixPaths to POSIX path of (selectedItem as alias)
+            end repeat
+
+            return posixPaths as text
+        end tell
+    ]])
+
+    if not paths or paths == "" then
+        hs.alert.show("No Finder selection")
+        return
+    end
+
+    hs.pasteboard.setContents(paths)
+    hs.alert.show("Copied selected paths")
+end
 
 -- ====================
 -- 專案自訂 Finder 快捷鍵
@@ -29,6 +86,18 @@ table.insert(remaps, r("cmd", "d", "cmd", "delete"))
 
 -- 本專案改成送出 Option + Cmd + L，也就是前往 Downloads
 table.insert(remaps, r("alt", "d", {"alt", "cmd"}, "l"))
+
+-- Control + U
+-- 送出 Cmd + Up，也就是回到上一層資料夾
+table.insert(remaps, r("ctrl", "u", "cmd", "up"))
+
+-- Control + Shift + C
+-- 複製目前 Finder 視窗所在資料夾路徑
+table.insert(remaps, action({"ctrl", "shift"}, "c", copyCurrentFolderPath))
+
+-- Control + C
+-- 複製目前選取檔案或資料夾的完整路徑
+table.insert(remaps, action("ctrl", "c", copySelectedPaths))
 
 -- ====================
 -- Finder 專屬預設快捷鍵

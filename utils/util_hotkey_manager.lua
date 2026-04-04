@@ -17,7 +17,13 @@ function M.map(app, mod, key, outMod, outKey, options)
         end
 
         table.insert(remapTable[appName], hs.hotkey.new(mod, key, function()
+            if options and options.action then
+                options.action()
+                return
+            end
+
             press(outMod or {}, outKey or key)
+
             if options and options.message then
                 hs.alert.show(options.message)
             end
@@ -29,6 +35,7 @@ function M.registerRemaps(definitions)
     for _, remap in ipairs(definitions or {}) do
         M.map(remap.app, remap.fromMods, remap.fromKey, remap.toMods, remap.toKey, {
             message = remap.message,
+            action = remap.action,
         })
     end
 end

@@ -35,7 +35,7 @@
 
 - [`init.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/init.lua) 明確列出 launcher 與 snippets 等使用者設定
 - 每個 app module 盡量只回傳資料，例如 [`apps/finder.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/finder.lua)、[`apps/safari.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/safari.lua)、[`apps/obsidian.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/apps/obsidian.lua)
-- app modules 可以透過 [`utils/util_app_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_config.lua) 的 `remap(...)` helper 用 one-line 方式追加 remap
+- app modules 可以透過 [`utils/util_app_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_config.lua) 的 `remap(...)` helper 用 one-line 方式追加單一步驟 remap，也可以用 `action(...)` 定義一串自訂動作
 - [`utils/util_app_loader.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_loader.lua) 自動掃描 `apps/` 並載入 app modules
 - [`utils/app_registry.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/app_registry.lua) 只負責聚合這些 app config
 - [`utils/config_validator.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/config_validator.lua) 先驗證 app config 內容，再進入註冊流程
@@ -58,6 +58,7 @@
 - `hyper + n`：開啟 Notes、建立新筆記，並貼上目前剪貼簿內容
 - `hyper + o`：開啟 Obsidian 的當日日記，跳到文末，並貼上目前剪貼簿內容
 - `hyper + f`：開啟 Notion
+- `hyper + x`：開啟 Codex
 - `hyper + shift + tab`：切換目前視窗大小
 - 按住 `hyper + shift`：在滑鼠旁顯示 `WIN` 提示，方便辨識目前可用滑鼠移動視窗
 - `hyper + ``：依目前 App 送出對應的 sidebar toggle 快捷鍵
@@ -71,6 +72,37 @@
 - 在 `Finder` 中，`cmd + d` 會送出 `cmd + delete`
 - 在 `Notes` 中，`ctrl + e` 會送出 `option + cmd + f`
 - 在 `Notion` 中，`ctrl + e` 會送出 `cmd + p`
+- 在 `Raycast` 中，`hyper + v` 會送出 `option + return`，並顯示 `Pasted`
+
+## App Module Patterns
+
+[`utils/util_app_config.lua`](/Users/stanleyshiao/Library/Mobile%20Documents/com~apple~CloudDocs/Work/hammerspoon/utils/util_app_config.lua) 目前提供兩種 helper：
+
+- `remap(fromMods, fromKey, toMods, toKey, options)`：適合單一步驟快捷鍵重映射
+- `action(fromMods, fromKey, callback, options)`：適合需要送出多個動作、顯示提示、加 delay 的情境
+
+`remap(...)` 範例：
+
+```lua
+local appConfig = require("utils.util_app_config")
+local r = appConfig.remap
+
+table.insert(remaps, r("ctrl", "e", "cmd", "p"))
+```
+
+`action(...)` 範例：
+
+```lua
+local appConfig = require("utils.util_app_config")
+local action = appConfig.action
+
+table.insert(remaps, action({"cmd", "alt", "ctrl"}, "v", function()
+    hs.eventtap.keyStroke({"alt"}, "return", 0)
+    hs.alert.show("Pasted")
+end))
+```
+
+如果某個 app 只需要簡單 remap，維持 `remap(...)` 就好；只有在需要一連串動作時再升級成 `action(...)`。
 
 ## Global Sidebar Toggle
 

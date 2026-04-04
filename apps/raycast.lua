@@ -3,12 +3,14 @@
 
 local name = "Raycast"
 local appConfig = require("utils.util_app_config")
+local action = appConfig.action
 local r = appConfig.remap
 local remaps = {}
 
-table.insert(remaps, r({"cmd", "alt", "ctrl"}, "v", {"alt"}, "return", {
-    message = "Pasted",
-}))
+table.insert(remaps, action({"cmd", "alt", "ctrl"}, "v", function()
+    hs.eventtap.keyStroke({"alt"}, "return", 0)
+    hs.alert.show("Pasted")
+end))
 
 return {
     name = name,

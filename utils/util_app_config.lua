@@ -32,4 +32,20 @@ function M.remap(fromMods, fromKey, toMods, toKey, options)
     return remap
 end
 
+function M.action(fromMods, fromKey, callback, options)
+    local remap = {
+        fromMods = normalizeMods(fromMods),
+        fromKey = fromKey,
+        action = callback,
+    }
+
+    if options then
+        for key, value in pairs(options) do
+            remap[key] = value
+        end
+    end
+
+    return remap
+end
+
 return M

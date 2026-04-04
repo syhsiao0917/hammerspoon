@@ -29,6 +29,14 @@ local function validateRemap(remap, appName, index)
     expectTable(remap, string.format("%s.remaps[%d]", appName, index))
     expectMods(remap.fromMods, string.format("%s.remaps[%d].fromMods", appName, index))
     expectString(remap.fromKey, string.format("%s.remaps[%d].fromKey", appName, index))
+
+    if remap.action ~= nil then
+        if type(remap.action) ~= "function" then
+            error(string.format("%s.remaps[%d].action must be a function", appName, index))
+        end
+        return
+    end
+
     expectMods(remap.toMods, string.format("%s.remaps[%d].toMods", appName, index))
     expectString(remap.toKey, string.format("%s.remaps[%d].toKey", appName, index))
 end

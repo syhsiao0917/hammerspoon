@@ -16,7 +16,7 @@ local launcherConfig = {
     {key = "g", app = "Notes"},
     {key = "f", app = "Notion"},
     {key = "c", app = "Visual Studio Code"},
-    {key = "v", app = "Codex"},
+    {key = "x", app = "Codex"},
 
 
 }

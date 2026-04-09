@@ -28,8 +28,8 @@ local function runAppleScript(script)
     return nil
 end
 
-local function copyCurrentFolderPath()
-    local path = runAppleScript([[
+local function getCurrentFolderPath()
+    return runAppleScript([[
         tell application "Finder"
             if (count of Finder windows) is 0 then
                 return POSIX path of (target of desktop as alias)
@@ -38,6 +38,10 @@ local function copyCurrentFolderPath()
             return POSIX path of (target of front Finder window as alias)
         end tell
     ]])
+end
+
+local function copyCurrentFolderPath()
+    local path = getCurrentFolderPath()
 
     if not path or path == "" then
         hs.alert.show("No Finder folder path")
@@ -46,6 +50,31 @@ local function copyCurrentFolderPath()
 
     hs.pasteboard.setContents(path)
     hs.alert.show("Copied current folder path")
+end
+
+local function openTerminalAtCurrentFolder()
+    local path = getCurrentFolderPath()
+
+    if not path or path == "" then
+        hs.alert.show("No Finder folder path")
+        return
+    end
+
+    local task = hs.task.new("/usr/bin/open", function(exitCode)
+        if exitCode == 0 then
+            hs.alert.show("Opened Terminal at current folder")
+            return
+        end
+
+        hs.alert.show("Failed to open Terminal")
+    end, {"-a", "Terminal", path})
+
+    if not task then
+        hs.alert.show("Failed to start Terminal task")
+        return
+    end
+
+    task:start()
 end
 
 local function copySelectedPaths()
@@ -94,6 +123,10 @@ table.insert(remaps, r("ctrl", "u", "cmd", "up"))
 -- Control + Shift + C
 -- 複製目前 Finder 視窗所在資料夾路徑
 table.insert(remaps, action({"ctrl", "shift"}, "c", copyCurrentFolderPath))
+
+-- Control + Shift + T
+-- 在目前 Finder 視窗所在資料夾開啟 Terminal
+table.insert(remaps, action({"ctrl", "shift"}, "t", openTerminalAtCurrentFolder))
 
 -- Control + C
 -- 複製目前選取檔案或資料夾的完整路徑

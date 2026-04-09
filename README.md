@@ -55,6 +55,7 @@
 - `hyper + s`：開啟 Safari
 - `hyper + t`：開啟 MacVim
 - `hyper + g`：開啟 Notes
+- `hyper + m`：切到 Notion，並貼上目前剪貼簿內容到當前游標位置
 - `hyper + n`：開啟 Notes、建立新筆記，並貼上目前剪貼簿內容
 - `hyper + o`：開啟 Obsidian 的當日日記，跳到文末，並貼上目前剪貼簿內容
 - `hyper + f`：開啟 Notion
@@ -72,6 +73,7 @@
 - 在 `Finder` 中，`cmd + d` 會送出 `cmd + delete`
 - 在 `Finder` 中，`ctrl + u` 會送出 `cmd + up`
 - 在 `Finder` 中，`ctrl + shift + c` 會複製目前資料夾路徑到剪貼簿
+- 在 `Finder` 中，`ctrl + shift + t` 會在目前資料夾開啟 Terminal
 - 在 `Finder` 中，`ctrl + c` 會複製目前所選檔案或資料夾路徑到剪貼簿
 - 在 `Notes` 中，`ctrl + e` 會送出 `option + cmd + f`
 - 在 `Notion` 中，`ctrl + e` 會送出 `cmd + p`
@@ -160,3 +162,9 @@ end))
 - macOS 已授權 Hammerspoon 的 Accessibility 權限
 - Obsidian 已啟用 Daily notes core plugin
 - 前景沒有系統對話框擋住目標筆記 App 接收快捷鍵
+
+如果 `hyper + m` 沒有成功貼到目前 Notion 游標位置，先確認：
+
+- macOS 已授權 Hammerspoon 的 Accessibility 權限
+- Notion 視窗目前已開啟，且編輯游標已經在可輸入的位置
+- 前景沒有系統對話框擋住 Notion 接收快捷鍵

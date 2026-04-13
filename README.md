@@ -60,7 +60,7 @@
 - `hyper + o`：開啟 Obsidian 的當日日記，跳到文末，並貼上目前剪貼簿內容
 - `hyper + f`：開啟 Notion
 - `hyper + x`：開啟 Codex
-- `hyper + shift + tab`：切換目前視窗大小
+- `hyper + tab`：切換目前視窗大小
 - 按住 `hyper + shift`：在滑鼠旁顯示 `WIN` 提示，方便辨識目前可用滑鼠移動視窗
 - `hyper + ``：依目前 App 送出對應的 sidebar toggle 快捷鍵
 - `hyper + 1`：依目前 App 送出對應的 sidebar toggle 快捷鍵

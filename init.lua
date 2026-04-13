@@ -2,12 +2,15 @@
 hs.alert.show("load init.lua")
 
 local bootstrap = require("utils.bootstrap")
+local windowActions = require("utils.util_window_actions")
 
 -- reload config
 hs.hotkey.bind({"cmd","alt","ctrl"}, "0", function() hs.reload() end)
 
 hyper = {"cmd","alt","ctrl"}
 hyper_shift = {"cmd","alt","ctrl", "shift"}
+
+hs.hotkey.bind(hyper, "tab", windowActions.toggleFocusedWindowSize)
 
 local launcherConfig = {
     {key = "3", app = "Finder"},

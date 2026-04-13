@@ -13,7 +13,6 @@ function M.start(options)
     local modifierIndicator = require("utils.util_modifier_indicator")
     local hotkeyManager = require("utils.util_hotkey_manager")
     local snippetEngine = require("utils.util_snippet_engine")
-    local windowActions = require("utils.util_window_actions")
 
     local hyper = options.hyper
     local hyperShift = options.hyper_shift
@@ -25,7 +24,6 @@ function M.start(options)
     configValidator.validateAppModules(appModules)
 
     launcher.register(hyper, launcherConfig)
-    hs.hotkey.bind(hyperShift, "tab", windowActions.toggleFocusedWindowSize)
     modifierIndicator.start(hyperShift)
     globalSidebar.setup(hyper, "`")
     globalSidebar.setup(hyper, "1")
